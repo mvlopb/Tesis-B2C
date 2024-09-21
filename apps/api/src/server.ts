@@ -79,7 +79,7 @@ export async function createServer() {
   // await server.register(userRoutes, { prefix: '/api' });
 
   await server.register(cors, {
-    origin: JSON.parse(process.env.CORS_ORIGINS ?? '["*"]'),
+    origin: JSON.parse('[]'),
     credentials: true,
   });
 
