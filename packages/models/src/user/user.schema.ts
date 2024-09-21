@@ -14,6 +14,7 @@ export const userSchema = new Schema(
       trim: true,
     },
     email: {
+      unique: true,
       type: String,
       required: [true, ''],
       trim: true,
