@@ -24,6 +24,11 @@ export const userSchema = new Schema(
       type: String,
       required: [true, ''],
     },
+    role: {
+      type: String,
+      required: true,
+      enum: ['Client', 'Employee'],
+    },
   },
-  { timestamps: true }
+  { timestamps: true, discriminatorKey: 'role' }
 );
