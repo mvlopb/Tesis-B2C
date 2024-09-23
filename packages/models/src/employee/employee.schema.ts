@@ -6,19 +6,19 @@ export const employeeSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, ''],
+      // required: [true, ''],
     },
     contractDate: {
-      type: 'Date',
+      type: Date,
       default: Date.now,
     },
-    role: {
+    department: {
       type: String,
-      required: true,
+      // required: true,
       enum: ['Admin', 'Manager', 'Support'],
     },
   }, 
 
-  { discriminatorKey: 'role' }  
+  { discriminatorKey: 'department' }  
 
 );
