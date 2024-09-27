@@ -3,17 +3,16 @@ import { Schema, type Types, type Document } from 'mongoose';
 
 export const clientSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, ''],
-    },
     orders: [
       { type: Schema.Types.ObjectId, 
         ref: 'Order' }
     ],
+    supportTickets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'SupportTicket'
+      }
+    ]
   }, 
-  
-
 
 );

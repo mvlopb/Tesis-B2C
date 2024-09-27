@@ -11,4 +11,8 @@ export const categoryMutations = Object.freeze({
   createManyCategories: CategoryTC.mongooseResolvers.createMany(),
   createOneCategory: CategoryTC.mongooseResolvers.createOne(),
   updateOneCategory: CategoryTC.mongooseResolvers.updateOne(),
+  removeOneCategory: CategoryTC.mongooseResolvers.removeOne(),
+  removeManyCategories: CategoryTC.mongooseResolvers.removeMany(),
+
 });
+

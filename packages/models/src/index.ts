@@ -4,5 +4,20 @@ export * from './category';
 export * from './product';
 export * from './client';
 export * from './employee';
+export * from './storehouse';
+export * from './stock';
+export * from './payment';
+export * from './administrator';
+export * from './manager';
+export * from './support';
+export * from './supportTicket';
+
+
+
+
+
+
+
+
 
 

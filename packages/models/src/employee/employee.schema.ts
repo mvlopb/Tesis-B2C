@@ -1,24 +1,23 @@
 import { date, type z } from 'zod';
-import { Schema, type Types, type Document } from 'mongoose';
+import { Schema, type Types, type Document, SchemaType } from 'mongoose';
 
 export const employeeSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      // required: [true, ''],
-    },
     contractDate: {
       type: Date,
       default: Date.now,
     },
+
     department: {
       type: String,
-      // required: true,
-      enum: ['Admin', 'Manager', 'Support'],
+      enum: ['Administrator', 'Manager', 'Support']
     },
-  }, 
 
-  { discriminatorKey: 'department' }  
+    status: {
+      type: String,
+      enum: ['Active', 'Inactive'],
+      default: 'Active'
+    }
+  },   
 
 );

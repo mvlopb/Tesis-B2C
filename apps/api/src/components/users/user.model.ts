@@ -3,17 +3,17 @@ import { hash } from 'argon2';
 import { composeMongoose } from 'graphql-compose-mongoose';
 import { userSchema } from '@avila-tek/models';
 
-/**
- * @async
- * @function
- * @description Hashes password with module argon2 before saving it in database every time it is modified
- * @listens userSchema:save
- * @param next {CallbackWithoutResultAndOptionalError}
- * @requires argon2
- * @since 1.0.0
- * @summary Hashes password
- * @version 1
- */
+/**a
+ * @async a
+ * @function a
+ * @description Hashes password with module argon2 before saving it in database every time it is modified a
+ * @listens userSchema:save a
+ * @param next {CallbackWithoutResultAndOptionalError} a
+ * @requires argon2 a
+ * @since 1.0.0 a
+ * @summary Hashes password a
+ * @version 1 a
+  a */ 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();

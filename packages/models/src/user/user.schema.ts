@@ -5,30 +5,56 @@ export const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: [true, ''],
+      required: [true, 'Es necesario agregar el nombre del usuario'],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, ''],
+      required: [true, 'Es necesario agregar el apellido del usuario'],
       trim: true,
     },
     email: {
       unique: true,
       type: String,
-      required: [true, ''],
+      required: [true, 'Es necesario agregar el correo electrónico del usuario'],
       trim: true,
       lowercase: true,
     },
+
+    phone: {
+      type: String,
+    },
+    birthday: {
+      type: Date,
+    },
     password: {
       type: String,
-      required: [true, ''],
+      required: [true, 'Es necesario agregar una contraseña del usuario'],
+    },
+    state: {
+      type: String,
+      required: [true, 'Es necesario agregar el estado de residencia del usuario']
+    },
+    city: {
+      type: String,
+      required: [true, 'Es necesario agregar la ciudad de residencia del usuario']
+    },
+    address: [
+      {direction: {
+        type: String,
+      }
+
+      }
+    ],
+    genre: {
+      type: String,
+      enum: ['m','f','na']
     },
     role: {
       type: String,
-      required: true,
       enum: ['Client', 'Employee'],
-    },
+      required: [true, 'Es necesario definir el tipo de usuario'],
+    }
   },
   { timestamps: true, discriminatorKey: 'role' }
 );

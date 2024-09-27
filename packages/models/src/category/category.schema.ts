@@ -10,7 +10,9 @@ export const categorySchema = new Schema(
       unique: true,
     },
     description: {
-      type: String
+      type: String,
+      trim: true,
     }
+    //imagen
   },
 );

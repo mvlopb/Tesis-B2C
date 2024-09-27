@@ -1,4 +1,4 @@
-import type { z } from 'zod';
+import { number, type z } from 'zod';
 import { Schema, type Types, type Document } from 'mongoose';
 
 export const productSchema = new Schema(
@@ -8,6 +8,11 @@ export const productSchema = new Schema(
       required: [true, ''],
       trim: true,
     },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: [true, 'Por favor introduzca la categoría a la cual pertenece el producto']
+      },
     shortDescription: {
       type: String,
       trim: true
@@ -16,6 +21,17 @@ export const productSchema = new Schema(
       type: String,
       trim: true
     },    
+    images: [{
+      type: String,
+      validate: {
+        validator: function (v: string) {
+
+          return /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(v);
+        },
+        message: (props: any) => `${props.value} no es un url válido`,
+      },
+     }
+    ],
     price: {
       type:Number,
       required: [true, ''],
@@ -32,6 +48,10 @@ export const productSchema = new Schema(
       trim: true,
       required: [true, ""],
       unique: true
-    }
+    },
+    // soldQty: {
+    //   type: number,
+    //   default: 0,
+    // }
   },
 );
