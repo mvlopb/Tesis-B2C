@@ -8,13 +8,5 @@ export const supportSchema = new Schema(
       ref: 'Employee',
       required: [true, 'Es necesaria el id del empleado para asignarlo a la colección de soporte']
     },
-    supportTickets: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'SupportTicket'
-      }
-
-      //date
-    ]
   },
 );

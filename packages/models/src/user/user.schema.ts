@@ -23,10 +23,13 @@ export const userSchema = new Schema(
 
     phone: {
       type: String,
+      unique: true,
     },
+
     birthday: {
-      type: Date,
+      type: String,
     },
+    
     password: {
       type: String,
       required: [true, 'Es necesario agregar una contraseña del usuario'],
@@ -46,7 +49,7 @@ export const userSchema = new Schema(
 
       }
     ],
-    genre: {
+    gender: {
       type: String,
       enum: ['m','f','na']
     },

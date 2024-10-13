@@ -24,7 +24,12 @@ export const orderSchema = new Schema(
     quantity: {
       type: Number,
       required: true,
-      min: 1,
+      validate: {
+        validator: (value: number) => {
+          return value >= 0;
+        },
+        message: 'El campo "subtotal" debe ser un número positivo.'
+      }
     }
     }, ],
 
@@ -48,7 +53,13 @@ export const orderSchema = new Schema(
         },
         message: 'El campo "total" debe ser un número positivo.'
       }
-    }
+    },
+
+    notification: [
+      {
+        type: String,
+      }
+    ]
 
   },
   { timestamps: true }

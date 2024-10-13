@@ -11,4 +11,5 @@ export const userMutations = Object.freeze({
   createManyUsers: UserTC.mongooseResolvers.createMany(),
   createOneUser: UserTC.mongooseResolvers.createOne(),
   updateOneUser: UserTC.mongooseResolvers.updateOne(),
+  updateUserById: UserTC.mongooseResolvers.updateById(),
 });

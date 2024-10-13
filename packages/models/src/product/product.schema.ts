@@ -13,23 +13,19 @@ export const productSchema = new Schema(
       ref: 'Category',
       required: [true, 'Por favor introduzca la categoría a la cual pertenece el producto']
       },
-    shortDescription: {
-      type: String,
-      trim: true
-    },
     longDescription: {
       type: String,
       trim: true
     },    
+    color: {
+      type: String,
+    },
+    tag: {
+    type: String,
+    enum: ['Mujer', 'Hombres', 'Entrenamiento', 'Ninos', 'Futbol', 'Originales', 'Esenciales', 'Natacion', 'Trotar'],
+    },
     images: [{
       type: String,
-      validate: {
-        validator: function (v: string) {
-
-          return /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(v);
-        },
-        message: (props: any) => `${props.value} no es un url válido`,
-      },
      }
     ],
     price: {
@@ -49,9 +45,9 @@ export const productSchema = new Schema(
       required: [true, ""],
       unique: true
     },
-    // soldQty: {
-    //   type: number,
-    //   default: 0,
-    // }
+     soldQty: {
+      type: Number,
+       default: 0.00,
+     }
   },
 );
