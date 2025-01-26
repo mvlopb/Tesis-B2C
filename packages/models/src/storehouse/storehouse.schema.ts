@@ -26,3 +26,5 @@ export const storehouseSchema = new Schema(
     }
   },
 );
+
+storehouseSchema.index({ state: 1 });

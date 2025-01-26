@@ -28,6 +28,7 @@ export const orderMutations = Object.freeze({
   createOneOrder: OrderTC.mongooseResolvers.createOne(),
   updateOneOrder: OrderTC.mongooseResolvers.updateOne(),
   updateOrderById: OrderTC.mongooseResolvers.updateById(),
+  deleteOneOrder: OrderTC.mongooseResolvers.removeOne(),
 
 //TODO - Update productos en orden  
   

@@ -43,11 +43,26 @@ export const userSchema = new Schema(
       required: [true, 'Es necesario agregar la ciudad de residencia del usuario']
     },
     address: [
-      {direction: {
-        type: String,
-      }
-
-      }
+      {
+        direction: {
+          type: String,
+        },
+        location: {
+          type: {
+            type: String, 
+            enum: ['Point'], 
+            required: true,
+          },
+          coordinates: {
+            type: [Number], 
+            required: true,
+            validate: {
+              validator: (coords: number[]) => coords.length === 2,
+              message: 'Coordinates must contain exactly two values: [longitude, latitude]',
+            },
+          },
+        },
+      },
     ],
     gender: {
       type: String,

@@ -7,11 +7,23 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate-docs": "jsdoc -d docs --configure jsDocConfig.json",
-    "test": "turbo test"
+    "test": "turbo test",
+    "populate:stock": "ts-node apps/api/src/scripts/populateStock.ts",
+    "populate:orders": "ts-node apps/api/src/scripts/populateOrders.ts",
+    "populate:tickets": "ts-node apps/api/src/scripts/populateTickets.ts",
+    "populate:payments": "ts-node apps/api/src/scripts/populatePayments.ts",
+    "restock": "ts-node apps/api/src/scripts/restock.ts",
+    "reset:quantity": "ts-node apps/api/src/scripts/resetSoldQty.ts",
+    "populate:address": "ts-node apps/api/src/scripts/populateAddress.ts"
+
+
+
+
   },
   "devDependencies": {
     "@avila-tek/eslint-config": "*",
     "@avila-tek/typescript-config": "*",
+    "@faker-js/faker": "^9.0.3",
     "prettier": "^3.2.4",
     "turbo": "latest"
   },

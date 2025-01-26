@@ -1,4 +1,4 @@
-import type { z } from 'zod';
+import { number, type z } from 'zod';
 import { Schema, type Types, type Document } from 'mongoose';
 export const orderSchema = new Schema(
   {
@@ -9,7 +9,7 @@ export const orderSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['placed', 'confirmed', 'processing', 'shipped'],
+      enum: ['placed', 'confirmed', 'processing', 'shipped', 'cancelled'],
       default: 'placed',
     },
     orderDate: {
@@ -55,6 +55,28 @@ export const orderSchema = new Schema(
       }
     },
 
+    deliveryDetails: {
+      delivery: {
+        type: Schema.Types.ObjectId,
+        ref: 'Employee'
+      },
+      status: {
+        type: String,
+        enum: ['ready for dispatch', 'out for delivery', 'on the way', 'shipped'],
+        default: 'ready for dispatch',        
+      },
+      distance: {
+        type: Number,
+        validate: {
+          validator: (value: number) => {
+            return value >= 0;
+          },
+          message: 'El campo "subtotal" debe ser un número positivo.'
+        },
+        //buscar como hacer referencia a un atributo en otro documento
+      }
+    },
+
     notification: [
       {
         type: String,
@@ -64,3 +86,7 @@ export const orderSchema = new Schema(
   },
   { timestamps: true }
 );
+
+orderSchema.index({ client: 1 });
+orderSchema.index({ orderDate: -1 });
+orderSchema.index({ client: 1, orderDate: -1 });

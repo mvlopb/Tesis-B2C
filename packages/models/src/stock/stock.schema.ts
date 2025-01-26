@@ -31,4 +31,6 @@ export const stockSchema = new Schema(
   },
 );
 
-//aquí faltaría hacer el trigger para cada vez que se descuente un producto
+stockSchema.index({ quantity: 1 });
+stockSchema.index({ restockDate: -1 });
+

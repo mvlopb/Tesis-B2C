@@ -48,6 +48,41 @@ export const productSchema = new Schema(
      soldQty: {
       type: Number,
        default: 0.00,
-     }
+     },
+     editedBy: [
+      {
+        manager: {
+          type: Schema.Types.ObjectId,
+          ref: 'Employee'
+        },
+
+        lastUpdate: {
+          type: Date,
+          required: true,
+        }
+      }
+    ],
+    createdBy: 
+      {
+        administrator: {
+          type: Schema.Types.ObjectId,
+          ref: 'Employee'
+        },
+      }
+
   },
 );
+
+
+productSchema.index({ name: 1 });
+
+productSchema.index({ category: 1 });
+
+productSchema.index({ price: 1 });
+
+productSchema.index({ tag: 1 });
+
+productSchema.index({ sku: 1 });
+
+
+

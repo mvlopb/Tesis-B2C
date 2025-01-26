@@ -9,7 +9,7 @@ async function start() {
       process.exit(1);
     });
 
-    const port = parseInt(String(process.env.PORT || '3000'), 10);
+    const port = parseInt(String(process.env.PORT || '3001'), 10);
     const host = process.env.HOST || '0.0.0.0';
     await server.listen({ host, port });
 

@@ -10,7 +10,7 @@ export const employeeSchema = new Schema(
 
     department: {
       type: String,
-      enum: ['Administrator', 'Manager', 'Support']
+      enum: ['Administrator', 'Delivery', 'Manager', 'Support']
     },
 
     status: {

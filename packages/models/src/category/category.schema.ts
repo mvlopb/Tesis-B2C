@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import { Schema, type Types, type Document } from 'mongoose';
+import { Schema, type Types, type Document, SchemaType } from 'mongoose';
 
 export const categorySchema = new Schema(
   {
@@ -12,7 +12,27 @@ export const categorySchema = new Schema(
     description: {
       type: String,
       trim: true,
-    }
-    //imagen
+    },
+    editedBy: [
+      {
+        manager: {
+          type: Schema.Types.ObjectId,
+          ref: 'Employee'
+        },
+
+        lastUpdate: {
+          type: Date,
+          required: true,
+        }
+      }
+    ],
+    createdBy: [
+      {
+        administrator: {
+          type: Schema.Types.ObjectId,
+          ref: 'Administrator'
+        },
+      }
+    ]
   },
 );

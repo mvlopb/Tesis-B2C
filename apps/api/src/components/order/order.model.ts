@@ -22,6 +22,7 @@ orderSchema.pre('save', async function (next) {
       return next(new Error('Cliente no encontrado'));
     }
 
+    //TODO - Cambiar código
     // @ts-ignore    
     const storehouse = await Storehouse.findOne({ state: client.state });
     if (!storehouse) {
