@@ -14,7 +14,11 @@
     "populate:payments": "ts-node apps/api/src/scripts/populatePayments.ts",
     "restock": "ts-node apps/api/src/scripts/restock.ts",
     "reset:quantity": "ts-node apps/api/src/scripts/resetSoldQty.ts",
-    "populate:address": "ts-node apps/api/src/scripts/populateAddress.ts"
+    "populate:address": "ts-node apps/api/src/scripts/populateAddress.ts",
+    "populate:clients": "ts-node apps/api/src/scripts/populateClients.ts",
+    "populate:employees": "ts-node apps/api/src/scripts/populateEmployees.ts"
+
+
 
 
 

@@ -13,7 +13,14 @@
     "test": "",
     "populate:stock": "ts-node src/scripts/populateStock.ts",
     "populate:orders": "ts-node src/scripts/populateOrders.ts",
-    "populate:tickets": "ts-node src/scripts/populateTickets.ts"
+    "populate:tickets": "ts-node src/scripts/populateTickets.ts",
+    "reset:soldQty": "ts-node src/scripts/resetSoldQty.ts",
+    "populate:clients": "ts-node src/scripts/populateClients.ts",
+    "populate:employees": "ts-node src/scripts/populateEmployees.ts"
+
+
+
+
   },
   "author": "Avila Tek <devops@avilatek.com>",
   "license": "ISC",

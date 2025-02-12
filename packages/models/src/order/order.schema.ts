@@ -60,6 +60,11 @@ export const orderSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Employee'
       },
+      selectedAddress: {
+        type: Schema.Types.ObjectId,
+        ref: 'User.address',
+        required: true,
+      },
       status: {
         type: String,
         enum: ['ready for dispatch', 'out for delivery', 'on the way', 'shipped'],

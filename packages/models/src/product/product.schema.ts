@@ -62,13 +62,11 @@ export const productSchema = new Schema(
         }
       }
     ],
-    createdBy: 
-      {
-        administrator: {
-          type: Schema.Types.ObjectId,
-          ref: 'Employee'
-        },
-      }
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'Employee',
+      required: true,
+      },
 
   },
 );

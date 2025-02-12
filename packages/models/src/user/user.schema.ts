@@ -34,16 +34,15 @@ export const userSchema = new Schema(
       type: String,
       required: [true, 'Es necesario agregar una contraseña del usuario'],
     },
-    state: {
-      type: String,
-      required: [true, 'Es necesario agregar el estado de residencia del usuario']
-    },
-    city: {
-      type: String,
-      required: [true, 'Es necesario agregar la ciudad de residencia del usuario']
-    },
     address: [
-      {
+      {state: {
+        type: String,
+        required: [true, 'Es necesario agregar el estado de residencia del usuario']
+      },
+      city: {
+        type: String,
+        required: [true, 'Es necesario agregar la ciudad de residencia del usuario']
+      },
         direction: {
           type: String,
         },
@@ -58,7 +57,7 @@ export const userSchema = new Schema(
             required: true,
             validate: {
               validator: (coords: number[]) => coords.length === 2,
-              message: 'Coordinates must contain exactly two values: [longitude, latitude]',
+              message: 'Las coordenadas deben contener al menos dos valores: [longitud, latitud]',
             },
           },
         },
@@ -76,3 +75,9 @@ export const userSchema = new Schema(
   },
   { timestamps: true, discriminatorKey: 'role' }
 );
+
+userSchema.index({ 'address.location': '2dsphere' });
+
+userSchema.path('address').validate(function(value: any[]) {
+  return value.length <= 5; 
+}, 'El usuario no puede tener más de 5 direcciones.');

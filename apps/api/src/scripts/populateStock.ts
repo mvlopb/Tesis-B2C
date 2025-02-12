@@ -5,7 +5,6 @@ import { Stock } from '../components/stock/stock.model';
 import { Product } from '../components/product/product.model';
 import { Storehouse } from '../components/storehouse/storehouse.model';
 
-// Carga las variables de entorno desde el archivo .env en la raíz del proyecto
 dotenv.config({ path: 'C:/Users/María Lopez/Documents/Tesis/Tesis-B2C/apps/api/.env' });
 
 
@@ -20,19 +19,18 @@ async function connectDB() {
     console.log('Conectado a la base de datos');
   } catch (error) {
     console.error('Error al conectar con la base de datos:', error);
-    process.exit(1); // Finalizar si falla la conexión
+    process.exit(1); 
   }
 }
 
-// Tamaño del lote
-const BATCH_SIZE = 50; // Ajusta este número según sea necesario
+const BATCH_SIZE = 50; 
 
 async function populateStock() {
-  await connectDB();  // Asegúrate de conectarte a la base de datos antes de poblar
+  await connectDB(); 
 
   try {
     const storehouses = await Storehouse.find().exec();
-    const totalProducts = await Product.countDocuments(); // Obtener el total de productos
+    const totalProducts = await Product.countDocuments();
     console.log(`Total de productos: ${totalProducts}`);
 
     for (let i = 0; i < totalProducts; i += BATCH_SIZE) {
@@ -53,18 +51,15 @@ async function populateStock() {
         }
       });
 
-      // Espera a que se complete el lote
       await Promise.all(stockPromises);
 
-      // Espera un momento antes de continuar con el siguiente lote
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Espera 1 segundo
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     console.log('Stock poblado exitosamente.');
   } catch (error) {
     console.error('Error al poblar stock:', error);
   } finally {
-    // Cierra la conexión a la base de datos si es necesario
     await mongoose.disconnect();
   }
 }
