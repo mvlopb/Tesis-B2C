@@ -26,17 +26,21 @@ async function connectDB() {
 
 const ORDER_BATCH_SIZE = 200;
 
-// Función para generar una fecha aleatoria
 function getRandomDate(start: Date, end: Date): Date {
   const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   return date;
 }
 
-// Función para seleccionar un estado aleatorio
 function getRandomOrderStatus(): string {
   const statuses = ['placed', 'confirmed', 'processing', 'shipped', 'cancelled'];
   const randomIndex = Math.floor(Math.random() * statuses.length);
-  return statuses[randomIndex] as string; // Aserción de tipo
+  return statuses[randomIndex] as string; 
+}
+
+function getRandomDeliveryStatus(): string {
+  const statuses = ['ready for dispatch', 'out for delivery', 'on the way', 'shipped'];
+  const randomIndex = Math.floor(Math.random() * statuses.length);
+  return statuses[randomIndex] as string; 
 }
 
 async function populateOrders() {
@@ -55,15 +59,28 @@ async function populateOrders() {
       const clientBatch = clients.slice(i, i + ORDER_BATCH_SIZE);
 
       const orderPromises = clientBatch.map(async (client) => {
-    // @ts-ignore    
 
-        const storehouse = await Storehouse.findOne({ state: client.state }).exec();
-        if (!storehouse) {
     // @ts-ignore    
+   const  selectedAddress = client.address.length > 0 ? client.address[faker.number.int({ min: 0, max: client.address.length - 1 })]: null
 
-          console.error(`No se encontró un almacén en el estado de ${client.state} para el cliente ${client.firstName} ${client.lastName}`);
-          return;
-        }
+        // @ts-ignore    
+    const storehouse = await Storehouse.findOne({
+      'address.location': {
+        $nearSphere: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [selectedAddress.location.coordinates[0], selectedAddress.location.coordinates[1]], 
+          },
+          $maxDistance: 40000,  
+        },
+      },
+    }).sort({ distance: 1 });//ordenar por distancia más corta
+    
+    if (!storehouse) {
+      //@ts-ignore
+      console.error(`No se encontró un almacén cercano para el cliente ${client.firstName} ${client.lastName}`);
+      return;
+    }
 
         // Generar entre 1 y 5 productos aleatorios por pedido
         const productsInOrder = [];
@@ -112,14 +129,18 @@ async function populateOrders() {
           }
         }
 
-        // Generar una fecha aleatoria entre los últimos 30 días
         const orderDate = getRandomDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date());
 
         const order = new Order({
           client: client._id,
-          status: getRandomOrderStatus(), // Asignar un estado aleatorio a la orden
+          status: getRandomOrderStatus(),
           orderDate: orderDate,
           productsArray: productsInOrder,
+          deliveryDetails: {   
+            selectedAddress: selectedAddress,
+            status:getRandomDeliveryStatus(),
+
+          },
         });
 
         await order.save();

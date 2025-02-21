@@ -5,6 +5,7 @@ import { Stock } from '../stock/stock.model';
 import { Client } from '../client/client.model';
 import { Storehouse } from '../storehouse/storehouse.model';
 import { Product } from '../product/product.model';
+import { Employee } from '../employee/employee.model';
 
 //pre-save para descontar del stock de producto, calcular subtotal, y agregar el costo de entrega
 orderSchema.pre('save', async function (next) {
@@ -45,6 +46,24 @@ orderSchema.pre('save', async function (next) {
     if (!storehouse) {
       return next(new Error('No se encontró un almacén cercano.'));
     }
+     //obtener el estado del almacén
+   const storehouseState = storehouse.address.state;
+
+     //buscar un empleado de delivery en el mismo estado que el almacén
+     const deliveryEmployees = await Employee.aggregate([
+      { $match: { department: 'Delivery', status: 'Active', 'address.state': storehouseState } },
+      { $sample: { size: 1 } } 
+    ]);
+    
+    const deliveryEmployee = deliveryEmployees.length > 0 ? deliveryEmployees[0] : null;
+    
+    if (!deliveryEmployee) {
+      return next(new Error('No se encontró un empleado de delivery disponible en el estado del almacén.'));
+    }
+   //asignar el empleado de delivery a la orden
+   // @ts-ignore
+   order.deliveryDetails.delivery = deliveryEmployee._id;
+
 
     //verificar si hay una orden original para comparar las cantidades de productos
     let originalOrder;
@@ -110,7 +129,6 @@ orderSchema.pre('save', async function (next) {
     order.subTotal = subTotal;
 
 //clcular la distancia entre el cliente y el almacén usando geoNear de mongo
-// Calcular la distancia entre el cliente y el almacén usando geoNear de MongoDB
 if (!storehouse?.address?.location?.coordinates || storehouse?.address?.location?.coordinates.length !== 2) {
   return next(new Error('Las coordenadas del almacén no están definidas correctamente'));
 }
@@ -127,12 +145,12 @@ const distanceResult = await Storehouse.aggregate([
   }
 ]);
 
-// Verificar si se obtuvo la distancia
+//verificar si se obtuvo la distancia
 if (!distanceResult.length || !distanceResult[0]?.distance) {
   return next(new Error('No se pudo calcular la distancia al almacén.'));
 }
 
-const distance = (distanceResult[0].distance) / 1000 // Guardar la distancia obtenida
+const distance = (distanceResult[0].distance) / 1000 //guardar la distancia obtenida
 
 // @ts-ignore
 order.deliveryDetails.distance = distance; 

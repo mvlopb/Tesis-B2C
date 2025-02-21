@@ -82,12 +82,6 @@ export const orderSchema = new Schema(
       }
     },
 
-    notification: [
-      {
-        type: String,
-      }
-    ]
-
   },
   { timestamps: true }
 );

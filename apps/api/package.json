@@ -16,7 +16,11 @@
     "populate:tickets": "ts-node src/scripts/populateTickets.ts",
     "reset:soldQty": "ts-node src/scripts/resetSoldQty.ts",
     "populate:clients": "ts-node src/scripts/populateClients.ts",
-    "populate:employees": "ts-node src/scripts/populateEmployees.ts"
+    "populate:employees": "ts-node src/scripts/populateEmployees.ts",
+    "change:categories": "ts-node src/scripts/changeCategories.ts",
+    "addProductData": "ts-node src/scripts/addProductData.ts"
+
+
 
 
 

@@ -65,7 +65,7 @@ export const productSchema = new Schema(
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'Employee',
-      required: true,
+      // required: true,
       },
 
   },
