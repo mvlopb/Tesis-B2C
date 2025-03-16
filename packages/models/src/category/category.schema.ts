@@ -22,17 +22,13 @@ export const categorySchema = new Schema(
 
         lastUpdate: {
           type: Date,
-          required: true,
         }
       }
     ],
-    createdBy: [
-      {
-        administrator: {
+    createdBy:     {
           type: Schema.Types.ObjectId,
-          ref: 'Administrator'
-        },
+          ref: 'Employee',      
       }
-    ]
+    
   },
 );

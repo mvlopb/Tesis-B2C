@@ -6,6 +6,7 @@ export const employeeSchema = new Schema(
     contractDate: {
       type: Date,
       default: Date.now,
+      required: true,
     },
 
     department: {
@@ -16,7 +17,8 @@ export const employeeSchema = new Schema(
     status: {
       type: String,
       enum: ['Active', 'Inactive'],
-      default: 'Active'
+      default: 'Active', 
+      required: true,
     }
   },   
 

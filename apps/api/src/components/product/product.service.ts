@@ -1,9 +1,5 @@
 import { Product } from './product.model';
 
-async function findOne(args: any) {
-  return Product.findOne({ ...args });
-}
-
 interface PriceFilter {
   gt?: number;
   gte?: number;
@@ -13,38 +9,50 @@ interface PriceFilter {
 
 interface Filter {
   price?: PriceFilter;
-  name?: String;
+  name?: string | RegExp;
 }
 
 interface Args {
   filter?: Filter;
 }
 
+// Función para buscar un solo producto
+async function findOne(args: any) {
+  return Product.findOne({ ...args });
+}
+
+// Función para buscar varios productos con filtros
 async function findAll(args: Args) {
+  const filter = args.filter || {};
   const query: any = {};
 
-  if (args.filter?.price) {
-    query['price'] = {};
-    
-    if (args.filter.price.gt !== undefined) {
-      query['price']['$gt'] = args.filter.price.gt;
+  // Procesar el filtro de precio
+  if (filter.price) {
+    const priceQuery: any = {};
+
+    if (filter.price.gte != null) {
+      priceQuery.$gte = filter.price.gte;
     }
-    if (args.filter.price.gte !== undefined) {
-      query['price']['$gte'] = args.filter.price.gte;
+    if (filter.price.lte != null) {
+      priceQuery.$lte = filter.price.lte;
     }
-    if (args.filter.price.lt !== undefined) {
-      query['price']['$lt'] = args.filter.price.lt;
+    if (filter.price.gt != null) {
+      priceQuery.$gt = filter.price.gt;
     }
-    if (args.filter.price.lte !== undefined) {
-      query['price']['$lte'] = args.filter.price.lte;
+    if (filter.price.lt != null) {
+      priceQuery.$lt = filter.price.lt;
+    }
+
+    // Solo agregar el filtro de precio si se definió algún operador
+    if (Object.keys(priceQuery).length > 0) {
+      query.price = priceQuery;
     }
   }
 
-    // Filtro de nombre
-    if (args.filter?.name) {
-      query['name'] = args.filter.name; // Asignar el filtro de nombre directamente
-    }
-
+  // Procesar el filtro de nombre (búsqueda insensible a mayúsculas)
+  if (filter.name) {
+    query.name = { $regex: filter.name, $options: 'i' };
+  }
 
   return Product.find(query);
 }

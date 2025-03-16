@@ -11,35 +11,32 @@ interface PriceFilter {
 
 interface Filter {
   price?: PriceFilter;
+  name?: string | RegExp; 
 }
 
 interface ProductQueryArgs {
   filter?: Filter;
-  name?: String;
 }
 
-// export const productQueries = Object.freeze({
-//   product: ProductTC.mongooseResolvers.findOne(),
-  
-//   products: {
-//     type: [ProductTC],
-//     args: {
-//       filter: 'JSON', 
-//     },
-//     resolve: async (_: any, { filter }: ProductQueryArgs, context: FastifyRequest) => {
-//       const filterArgs = filter || {}; 
-//       //@ts-ignore 
-//       return await productService.findAll(filterArgs);
-//     },
-//   },
-  
-//   productId: ProductTC.mongooseResolvers.findById(),
-// });
 
 export const productQueries = Object.freeze({
-  employee: ProductTC.mongooseResolvers.findOne(),
-  employees: ProductTC.mongooseResolvers.findMany(),
+  product: ProductTC.mongooseResolvers.findOne(),
+  
+  products: {
+    type: [ProductTC],
+    args: {
+      filter: 'JSON', 
+    },
+    resolve: async (_: any, { filter }: ProductQueryArgs, context: FastifyRequest) => {
+      return await productService.findAll({ filter: filter || {} });
+    },
+  },
+  
+  productId: ProductTC.mongooseResolvers.findById(),
 });
+
+
+
 
 export const productMutations = Object.freeze({
   createManyProducts: ProductTC.mongooseResolvers.createMany(),

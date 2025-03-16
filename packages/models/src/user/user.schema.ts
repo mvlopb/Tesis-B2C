@@ -19,8 +19,13 @@ export const userSchema = new Schema(
       required: [true, 'Es necesario agregar el correo electrónico del usuario'],
       trim: true,
       lowercase: true,
+      validate: {
+        validator: function (value) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        message: props => `${props.value} no es un correo electrónico válido`,
+      },
     },
-
     phone: {
       type: String,
       unique: true,
@@ -76,7 +81,7 @@ export const userSchema = new Schema(
   { timestamps: true, discriminatorKey: 'role' }
 );
 
-userSchema.index({ 'address.location': '2dsphere' });
+userSchema.index({ 'address.location': '2dsphere' }); //TODO - generar resto de indexes
 
 userSchema.path('address').validate(function(value: any[]) {
   return value.length <= 5; 

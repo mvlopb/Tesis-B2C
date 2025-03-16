@@ -53,7 +53,7 @@ export const productSchema = new Schema(
       {
         manager: {
           type: Schema.Types.ObjectId,
-          ref: 'Employee'
+          ref: 'Employee',
         },
 
         lastUpdate: {
@@ -65,7 +65,7 @@ export const productSchema = new Schema(
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'Employee',
-      // required: true,
+      required: true,
       },
 
   },
@@ -74,11 +74,8 @@ export const productSchema = new Schema(
 
 productSchema.index({ name: 1 });
 
-productSchema.index({ category: 1 });
 
 productSchema.index({ price: 1 });
-
-productSchema.index({ tag: 1 });
 
 productSchema.index({ sku: 1 });
 

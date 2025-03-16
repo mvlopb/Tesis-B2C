@@ -1,5 +1,5 @@
 import { number, type z } from 'zod';
-import { Schema, type Types, type Document } from 'mongoose';
+import mongoose, { Schema, type Types, type Document } from 'mongoose';
 export const orderSchema = new Schema(
   {
     client: {
@@ -11,6 +11,7 @@ export const orderSchema = new Schema(
       type: String,
       enum: ['placed', 'confirmed', 'processing', 'shipped', 'cancelled'],
       default: 'placed',
+      required: true,
     },
     orderDate: {
       type: Date,
@@ -28,7 +29,7 @@ export const orderSchema = new Schema(
         validator: (value: number) => {
           return value >= 0;
         },
-        message: 'El campo "subtotal" debe ser un número positivo.'
+        message: 'El campo "cantidad" debe ser un número positivo.'
       }
     }
     }, ],
@@ -58,7 +59,8 @@ export const orderSchema = new Schema(
     deliveryDetails: {
       delivery: {
         type: Schema.Types.ObjectId,
-        ref: 'Employee'
+        ref: 'Employee',
+        //validacion de que solo se inserte el tipo de empleado delivery
       },
       selectedAddress: {
         type: Schema.Types.ObjectId,

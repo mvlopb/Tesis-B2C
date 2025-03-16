@@ -18,7 +18,9 @@
     "populate:clients": "ts-node src/scripts/populateClients.ts",
     "populate:employees": "ts-node src/scripts/populateEmployees.ts",
     "change:categories": "ts-node src/scripts/changeCategories.ts",
-    "addProductData": "ts-node src/scripts/addProductData.ts"
+    "addProductData": "ts-node src/scripts/addProductData.ts",
+    "insert:orders": "ts-node src/scripts/insertOrders.ts"
+
 
 
 
