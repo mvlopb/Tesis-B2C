@@ -81,7 +81,7 @@ export const userSchema = new Schema(
   { timestamps: true, discriminatorKey: 'role' }
 );
 
-userSchema.index({ 'address.location': '2dsphere' }); //TODO - generar resto de indexes
+userSchema.index({ 'address.location': '2dsphere' }); 
 
 userSchema.path('address').validate(function(value: any[]) {
   return value.length <= 5; 
